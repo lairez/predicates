@@ -93,5 +93,34 @@ int main()
     perturb2d(predicate, q4, 256, 256, correct);
   }
 
+
+  /**
+   * A nasty test
+   * Four collinear points
+   */
+  {
+
+    long xs[4] = { 43294832,
+                   14990252,
+                   34010616,
+                   6530470 };
+
+    long base[] = {59705846, 42063505};
+
+    double pts[8];
+
+    for(int i = 0; i < 8; i++) {
+      int j = i/2;
+      int c = i % 2;
+      long e = base[c]*xs[j];
+      assert(e < ((long)2 << 53));    // e is exactly representable by a double
+      pts[i] = e;
+    }
+
+    double i = incircle(pts, &pts[2], &pts[4], &pts[6]);
+    assert(i == 0.0);
+
+  }
+
   return 0;
 }
