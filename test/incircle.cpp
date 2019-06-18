@@ -100,8 +100,8 @@ int main()
    */
   {
 
-    long xs[4] = { 43294832,
-                   14990252,
+    long xs[4] = { 14990252,
+                   43294832,
                    34010616,
                    6530470 };
 
@@ -119,6 +119,23 @@ int main()
 
     double i = incircle(pts, &pts[2], &pts[4], &pts[6]);
     assert(i == 0.0);
+
+    // Now, we slightly increase the y-coordinate of the second point. The three
+    // first points are not collinear anymore and they define a genuine circle.
+    // The fourth point is outside but the triangle is negatively oriented, the
+    // result should be positive.
+    double save = pts[3];
+
+    pts[3] = nextafter(save, 1.0);
+    i = incircle(pts, &pts[2], &pts[4], &pts[6]);
+
+    assert(i > 0.0);
+
+    // Similar test
+    pts[3] = nextafter(save, 0.0); // opposite direction
+    i = incircle(pts, &pts[2], &pts[4], &pts[6]);
+
+    assert(i < 0.0);
 
   }
 
