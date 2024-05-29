@@ -126,13 +126,13 @@ int main()
     // result should be positive.
     double save = pts[3];
 
-    pts[3] = nextafter(save, 1.0);
+    pts[3] = nextafter(save, INFINITY);
     i = incircle(pts, &pts[2], &pts[4], &pts[6]);
 
     assert(i > 0.0);
 
     // Similar test
-    pts[3] = nextafter(save, 0.0); // opposite direction
+    pts[3] = nextafter(save, -INFINITY); // opposite direction
     i = incircle(pts, &pts[2], &pts[4], &pts[6]);
 
     assert(i < 0.0);
